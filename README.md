@@ -23,7 +23,7 @@ The design except the Graph is just a mock up you can improve it however you wan
    - **Running the Project**:
      - After cloning or forking the project, navigate to the project directory.
      - Install dependencies with `npm install` (or `pnpm install` or `yarn`).
-     - Rename `.env.example` to `.env` and add the env information from this [link](https://docs.google.com/document/d/1qjKKnis-YXs18E6S_Hs3Jl5N6PWsEpoIoZ3-ECrtAWo/edit?usp=sharing)
+     - Rename `.env.example` to `.env` and add the env information from this [link](https://share.1password.com/s#S2aCrzRYgtW1PfFUXBGYSMqT_af1lFe4r8mujK0eRSw)
      - Start a development server:
 
        ```bash

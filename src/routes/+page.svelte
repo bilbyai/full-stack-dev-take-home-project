@@ -1,55 +1,41 @@
 <script lang="ts">
-	import { applyAction, enhance } from '$app/forms';
-	export let form;
+	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
-	let formIsSubmitting = false;
+	export let data;
+
+	$: ({ uniqueVisitors } = data);
+
+	let timeRange = "last-week";
+
+	function handleDateRangeChange(event: { currentTarget: { value: string; }; }) {
+		const url = new URL($page.url);
+		url.searchParams.set('date-range', event.currentTarget.value);
+		goto(url.href, { replaceState: true });
+	}
 </script>
 
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
-<main class="flex flex-col items-center justify-center w-screen h-screen bg-gray-50">
+<main class="flex flex-col bg-gray-50">
 	<div class="flex flex-col gap-4 px-10 py-4 bg-white border rounded-lg">
-		{#if formIsSubmitting}
-			<p>Submitting...</p>
-		{:else if form?.error}
-			<div class="text-red-500 ">
-				<p>{form?.error}</p>
-			</div>
-		{:else if form?.message}
-			<p>{form.message}</p>
+		<select bind:value={timeRange} on:change={handleDateRangeChange}>
+			<option value="last-week">Last week</option>
+			<option value="last-2-weeks">Last two weeks</option>
+			<option value="last-month">Last month</option>
+			<option value="last-quarter">Last quarter</option>
+			<option value="last-year">Last year</option>
+		</select>
+		
+		{#if uniqueVisitors}
+			{#each uniqueVisitors as data}
+				<div>
+					{data.country} - {data.hours.map(hour => `${hour.hour}: ${hour.unique}`).join(', ')}
+				</div>
+			{/each}
 		{/if}
-
-		<form
-			action="/"
-			method="POST"
-			class="flex flex-col gap-4 text-sm"
-			use:enhance={() => {
-				formIsSubmitting = true;
-
-				return async ({ result }) => {
-					formIsSubmitting = false;
-					await applyAction(result);
-				};
-			}}
-		>
-			<input
-				type="name"
-				name="name"
-				placeholder="Enter your name"
-				class="px-4 py-1 border rounded-lg w-80"
-				disabled={formIsSubmitting}
-			/>
-
-			{#if form?.errors?.name}
-				<small class="text-xs text-red-500">{form?.errors?.name[0]}</small>
-			{/if}
-			<button
-				type="submit"
-				disabled={formIsSubmitting}
-				class="px-4 py-2 text-white rounded-lg bg-slate-800">Submit</button
-			>
-		</form>
+		
 	</div>
 </main>

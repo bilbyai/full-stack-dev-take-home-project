@@ -1,8 +1,8 @@
-import { helloRouter } from './routers/hello.router';
+import { heatmapRouter } from './routers/heatmap.router';
 import { createTRPCRouter } from './trpcContext';
 
 export const appRouter = createTRPCRouter({
-	hello: helloRouter
+	heatmap: heatmapRouter
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,40 +1,21 @@
 import { trpcServer } from '$lib/trpc';
-import { helloParamsSchema } from '$server/validations/hello.schema';
-import type { Actions } from '@sveltejs/kit';
+import { DateRange } from '$lib/types/date-range';
+import { dateRangeFromMap } from '$lib/utils/date';
+import type { PageServerLoad } from './$types';
 
-export const actions: Actions = {
-	async default({ request, fetch }) {
-		const formData = Object.fromEntries(await request.formData());
+export const load = (async ({fetch, url}) => {
+	const dateRangeType:DateRange = url.searchParams.get('date-range') as DateRange ?? DateRange.LastWeek;
+	const dateRangeFrom = dateRangeFromMap[dateRangeType];
 
-		const safeParseFormData = helloParamsSchema.safeParse(formData);
+	dateRangeFrom.setHours(0, 0, 0, 0);
 
-		if (safeParseFormData.success) {
-			try {
-				const sayHelloResponse = await trpcServer(fetch).hello.sayHello.mutate(
-					safeParseFormData.data
-				);
-
-				return {
-					message: sayHelloResponse.message
-				};
-			} catch (e) {
-				if (e instanceof Error) {
-					return {
-						error: e.message
-					};
-				}
-
-				return {
-					error: 'An error occurred please try again'
-				};
-			}
-		} else {
-			const { fieldErrors: errors } = safeParseFormData.error.flatten();
-
-			return {
-				data: formData,
-				errors
-			};
-		}
-	}
-};
+	const uniqueVisitorsResponse = await trpcServer(fetch).heatmap.getUniqueVisitors.query({
+		from: dateRangeFrom,
+		until: new Date()
+	});
+	
+	return {
+		uniqueVisitors: uniqueVisitorsResponse,
+		dateRange: dateRangeType
+	};
+}) satisfies PageServerLoad;

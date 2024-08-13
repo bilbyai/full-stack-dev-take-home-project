@@ -12,7 +12,7 @@ Enhance the provided starter project by implementing an interactive heatmap grap
 - **Figma Design**: [Figma Design Link](https://www.figma.com/design/ryzsNfjmzOqVFWlFEcfKgq/Untitled?node-id=0-1&t=rzAYJm61YZciE01b-1)
 The design except the Graph is just a mock up you can improve it however you want
 - **Kibana Dashboard**: [Kibana Dashboard Link](https://bilby-terminal-test.kb.us-central1.gcp.cloud.es.io:9243/app/dashboards#/view/edf84fe0-e1a0-11e7-b6d5-4dc382ef7f5b)
-  - **Credential**: [Login information](https://share.1password.com/s#E_P4JcYFTBIuH3d64rP2zrxUSCo3afQqMu5Xi6LONSE)
+  - **Credential**: [Login information](https://share.1password.com/s#wdq5inAI2NT8fVMF7zg_z-kQ8ePxci2e5a1eD33re2o)
   - **Graph**: Search for the heatmap graph titled "[Logs] Unique Destination Heatmap" in Kibana for reference.
 
 ## Task Description
@@ -23,7 +23,7 @@ The design except the Graph is just a mock up you can improve it however you wan
    - **Running the Project**:
      - After cloning or forking the project, navigate to the project directory.
      - Install dependencies with `npm install` (or `pnpm install` or `yarn`).
-     - Rename `.env.example` to `.env` and add the env information from this [link](https://share.1password.com/s#_im5DiShEnUuy-6-FXuxfX_7L7_2zyvHqAM4lZBY2Is)
+     - Rename `.env.example` to `.env` and add the env information from this [link](https://share.1password.com/s#nBt-VrOxFJErij77I1JrCfijmdVhWopVd-kDHNBK0D0)
      - Start a development server:
 
        ```bash
